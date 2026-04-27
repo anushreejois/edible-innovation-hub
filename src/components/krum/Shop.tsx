@@ -1,9 +1,19 @@
+/* eslint-disable prettier/prettier */
 import { useState } from "react";
 import { useCart, type Product } from "@/lib/cart-context";
 import spoons from "@/assets/product-spoons.jpg";
 import set from "@/assets/product-cutlery-set.jpg";
 import cups from "@/assets/product-cups.jpg";
 import { Check } from "lucide-react";
+
+// ✅ INR formatter
+const formatINR = (amount: number) => {
+  return new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 0,
+  }).format(amount);
+};
 
 type Tier = {
   id: string;
@@ -81,21 +91,26 @@ export function Shop() {
                   {tier.badge}
                 </div>
               )}
+
               <div className="aspect-[4/3] overflow-hidden">
                 <img src={tier.image} alt={tier.name} loading="lazy" className="w-full h-full object-cover" />
               </div>
+
               <div className="p-7 space-y-5">
                 <div>
                   <h3 className="font-display text-3xl text-cream tracking-wide">{tier.name}</h3>
+
                   <div className="flex items-baseline gap-2 mt-2">
                     <span className="font-display text-5xl text-gradient-gold">
-                      {tier.price === 0 ? "—" : `$${tier.price}`}
+                      {tier.price === 0 ? "—" : formatINR(tier.price)}
                     </span>
+
                     <span className="text-xs text-muted-foreground uppercase tracking-[0.15em]">
                       {tier.unit}
                     </span>
                   </div>
                 </div>
+
                 <ul className="space-y-2.5">
                   {tier.features.map((f) => (
                     <li key={f} className="flex items-start gap-2.5 text-xs text-cream/75">
@@ -104,12 +119,13 @@ export function Shop() {
                     </li>
                   ))}
                 </ul>
+
                 <button
                   onClick={() => {
                     const product: Product = {
                       id: `${tab}-${tier.id}`,
                       name: `${tier.name} (${tab})`,
-                      price: tier.price || 0,
+                      price: tier.price,
                       image: tier.image,
                       flavor: tier.unit,
                     };

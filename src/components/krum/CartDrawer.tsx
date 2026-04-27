@@ -1,5 +1,15 @@
+/* eslint-disable prettier/prettier */
 import { useCart } from "@/lib/cart-context";
 import { X, Plus, Minus, Trash2 } from "lucide-react";
+
+// ✅ INR formatter (same as other files)
+const formatINR = (amount: number) => {
+  return new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 0,
+  }).format(amount);
+};
 
 export function CartDrawer() {
   const { items, open, setOpen, inc, dec, remove, total, clear, toast } = useCart();
@@ -12,6 +22,7 @@ export function CartDrawer() {
           open ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       />
+
       <aside
         className={`fixed top-0 right-0 z-[70] h-full w-full sm:w-[440px] bg-card border-l border-border shadow-deep transform transition-transform duration-500 ease-out ${
           open ? "translate-x-0" : "translate-x-full"
@@ -25,6 +36,7 @@ export function CartDrawer() {
                 {items.length} {items.length === 1 ? "item" : "items"}
               </p>
             </div>
+
             <button
               onClick={() => setOpen(false)}
               className="w-10 h-10 rounded-full border border-border flex items-center justify-center hover:border-gold hover:text-gold transition-colors"
@@ -57,6 +69,7 @@ export function CartDrawer() {
                       className="w-20 h-20 object-cover rounded-md"
                       loading="lazy"
                     />
+
                     <div className="flex-1 flex flex-col">
                       <div className="flex items-start justify-between gap-2">
                         <div>
@@ -67,6 +80,7 @@ export function CartDrawer() {
                             </p>
                           )}
                         </div>
+
                         <button
                           onClick={() => remove(item.id)}
                           className="text-muted-foreground hover:text-destructive transition-colors"
@@ -74,24 +88,23 @@ export function CartDrawer() {
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
                       </div>
+
                       <div className="mt-auto flex items-center justify-between">
                         <div className="flex items-center gap-2 border border-border rounded-full">
-                          <button
-                            onClick={() => dec(item.id)}
-                            className="w-7 h-7 flex items-center justify-center hover:text-gold"
-                          >
+                          <button onClick={() => dec(item.id)} className="w-7 h-7 flex items-center justify-center hover:text-gold">
                             <Minus className="w-3 h-3" />
                           </button>
+
                           <span className="text-xs w-5 text-center font-medium">{item.qty}</span>
-                          <button
-                            onClick={() => inc(item.id)}
-                            className="w-7 h-7 flex items-center justify-center hover:text-gold"
-                          >
+
+                          <button onClick={() => inc(item.id)} className="w-7 h-7 flex items-center justify-center hover:text-gold">
                             <Plus className="w-3 h-3" />
                           </button>
                         </div>
+
+                        {/* ✅ FIXED PRICE */}
                         <span className="font-display text-lg text-gold">
-                          ${(item.price * item.qty).toFixed(2)}
+                          {formatINR(item.price * item.qty)}
                         </span>
                       </div>
                     </div>
@@ -104,9 +117,16 @@ export function CartDrawer() {
           {items.length > 0 && (
             <footer className="border-t border-border px-6 py-5 space-y-4 bg-forest/40">
               <div className="flex items-center justify-between">
-                <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Subtotal</span>
-                <span className="font-display text-3xl text-gradient-gold">${total.toFixed(2)}</span>
+                <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                  Subtotal
+                </span>
+
+                {/* ✅ FIXED TOTAL */}
+                <span className="font-display text-3xl text-gradient-gold">
+                  {formatINR(total)}
+                </span>
               </div>
+
               <button
                 onClick={() => {
                   toast("Order placed — thank you!");
@@ -117,6 +137,7 @@ export function CartDrawer() {
               >
                 Checkout
               </button>
+
               <button
                 onClick={clear}
                 className="w-full text-[11px] uppercase tracking-[0.2em] text-muted-foreground hover:text-cream"

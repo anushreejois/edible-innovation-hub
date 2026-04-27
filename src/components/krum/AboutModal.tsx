@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { useCart } from "@/lib/cart-context";
 import { X } from "lucide-react";
 

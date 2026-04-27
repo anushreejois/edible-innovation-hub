@@ -1,9 +1,19 @@
+/* eslint-disable prettier/prettier */
 import { useCart, type Product } from "@/lib/cart-context";
 import spoons from "@/assets/product-spoons.jpg";
 import set from "@/assets/product-cutlery-set.jpg";
 import cups from "@/assets/product-cups.jpg";
 import straws from "@/assets/product-straws.jpg";
 import { Plus } from "lucide-react";
+
+// ✅ INR formatter
+const formatINR = (amount: number) => {
+  return new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 0,
+  }).format(amount);
+};
 
 const PRODUCTS: (Product & { tags: string[]; description: string })[] = [
   {
@@ -46,6 +56,7 @@ const PRODUCTS: (Product & { tags: string[]; description: string })[] = [
 
 export function Products() {
   const { add } = useCart();
+
   return (
     <section id="products" className="relative py-32 px-6 md:px-10 max-w-7xl mx-auto">
       <header className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
@@ -77,12 +88,19 @@ export function Products() {
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               />
             </div>
+
             <div className="p-6 space-y-3">
               <div className="flex items-start justify-between gap-2">
                 <h3 className="font-display text-2xl text-cream tracking-wide">{p.name}</h3>
-                <span className="font-display text-2xl text-gold">${p.price.toFixed(0)}</span>
+
+                {/* ✅ FIXED HERE */}
+                <span className="font-display text-2xl text-gold">
+                  {formatINR(p.price)}
+                </span>
               </div>
+
               <p className="text-xs text-cream/60 leading-relaxed">{p.description}</p>
+
               <div className="flex flex-wrap gap-1.5 pt-1">
                 {p.tags.map((t) => (
                   <span
@@ -93,6 +111,7 @@ export function Products() {
                   </span>
                 ))}
               </div>
+
               <button
                 onClick={() => add(p)}
                 className="w-full mt-4 flex items-center justify-center gap-2 py-3 rounded-full border border-gold/40 text-cream text-[11px] uppercase tracking-[0.2em] hover:bg-gold hover:text-forest-deep transition-all"

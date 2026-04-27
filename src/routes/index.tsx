@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { CartProvider, useCart } from "@/lib/cart-context";
@@ -14,7 +15,7 @@ import dividerCafe from "@/assets/divider-cafe.jpg";
 import packagingRetail from "@/assets/packaging-retail.jpg";
 import packagingNatural from "@/assets/packaging-natural.jpg";
 import packagingBulk from "@/assets/packaging-bulk.jpg";
-import { ArrowDown, ArrowUpRight, Phone, Mail, MapPin, Instagram, Twitter, Linkedin } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Phone, Mail, MapPin, Instagram, Twitter, Linkedin, Facebook, Globe } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -474,7 +475,9 @@ function Mission() {
   );
 }
 
-function Contact() {
+
+
+  function Contact() {
   const { toast } = useCart();
   const [submitted, setSubmitted] = useState(false);
 
@@ -489,9 +492,10 @@ function Contact() {
 
           <div className="space-y-5 mb-10">
             {[
-              { i: Phone, l: "Phone", v: "+91 80 4567 8901" },
-              { i: Mail, l: "Email", v: "hello@krum.eco" },
+              { i: Phone, l: "Phone", v: "+91 9900370310", link: "tel:+919900370310" },
+              { i: Mail, l: "Email", v: "connect@krum.in", link: "mailto:connect@krum.in" },
               { i: MapPin, l: "Address", v: "Indiranagar, Bengaluru 560038" },
+              { i: Globe, l: "Website", v: "krumcutlery.com", link: "https://krumcutlery.com" },
             ].map((c) => (
               <div key={c.l} className="flex items-start gap-4">
                 <div className="w-11 h-11 rounded-full border border-gold/30 flex items-center justify-center shrink-0">
@@ -499,20 +503,35 @@ function Contact() {
                 </div>
                 <div>
                   <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">{c.l}</p>
-                  <p className="text-cream text-base mt-0.5">{c.v}</p>
+
+                  {c.link ? (
+                    <a
+                      href={c.link}
+                      target="_blank"
+                      className="text-cream text-base mt-0.5 hover:text-gold"
+                    >
+                      {c.v}
+                    </a>
+                  ) : (
+                    <p className="text-cream text-base mt-0.5">{c.v}</p>
+                  )}
                 </div>
               </div>
             ))}
           </div>
 
           <div className="flex gap-3">
-            {[Instagram, Twitter, Linkedin].map((I, i) => (
+            {[
+              { icon: Instagram, link: "https://www.instagram.com/krum.cutlery" },
+              { icon: Facebook, link: "https://www.facebook.com/share/1Dffm3fChV/" },
+            ].map((s, i) => (
               <a
                 key={i}
-                href="#"
+                href={s.link}
+                target="_blank"
                 className="w-12 h-12 rounded-full border border-border flex items-center justify-center hover:border-gold hover:text-gold hover:-translate-y-0.5 transition-all"
               >
-                <I className="w-4 h-4" />
+                <s.icon className="w-4 h-4" />
               </a>
             ))}
           </div>
