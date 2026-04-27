@@ -29,14 +29,18 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "Krum" },
+      { name: "description", content: "Krum Edible Solutions offers a sustainable, luxurious, and interactive web experience for edible cutlery." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Krum" },
+      { property: "og:description", content: "Krum Edible Solutions offers a sustainable, luxurious, and interactive web experience for edible cutlery." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Krum" },
+      { name: "twitter:description", content: "Krum Edible Solutions offers a sustainable, luxurious, and interactive web experience for edible cutlery." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/63dca565-51e8-46d8-b197-0ed0ceca6428/id-preview-e0fb858a--112f2f83-5c21-4d72-affa-e225a44ed3ea.lovable.app-1777308548403.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/63dca565-51e8-46d8-b197-0ed0ceca6428/id-preview-e0fb858a--112f2f83-5c21-4d72-affa-e225a44ed3ea.lovable.app-1777308548403.png" },
     ],
     links: [
       {
